@@ -1,6 +1,5 @@
 package nl.hu.electricity;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -8,19 +7,20 @@ public class ElectricityPlan {
     private double _consumedElektricity;
     private String _company;
 
+    /**
+     * Constructor for ElectricityPlan
+     * @param consumedElektricity amount of consumed electricity in kWh
+     * @param company electricity company to simulate with. See docs for supported companies.
+     */
     public ElectricityPlan(double consumedElektricity, String company){
         _consumedElektricity = consumedElektricity;
-        _company = company.toUpperCase();
+        _company = company.toUpperCase(); //make toUpperCase to avoid errors with capital letters
     }
 
-    public double getConsumedElektricity() {
-        return _consumedElektricity;
-    }
-
-    public String getCompany() {
-        return _company;
-    }
-
+    /**
+     * Multiplies the consumedElectricity variable and electricity price based on the company variable.
+     * @return The simulated price in a String with currency formatting.
+     */
     public String getSimulatedElectricityPrice(){
         double electricityPrice = 0.0;
 
@@ -36,13 +36,16 @@ public class ElectricityPlan {
                 break;
             case "OXXIO":
                 electricityPrice = 0.198;
+                break;
             case "ENGIE":
                 electricityPrice = 0.210;
                 break;
             case "ESSENT":
                 electricityPrice = 0.210;
+                break;
         }
 
+        //Locale.GERMANY to get the Euro sign (NETHERLANDS isn't supported)
         return NumberFormat.getCurrencyInstance(Locale.GERMANY).format((electricityPrice * _consumedElektricity));
     }
 }
