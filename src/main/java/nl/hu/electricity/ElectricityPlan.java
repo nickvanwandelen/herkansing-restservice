@@ -14,7 +14,7 @@ public class ElectricityPlan {
      */
     public ElectricityPlan(double consumedElektricity, String company){
         _consumedElektricity = consumedElektricity;
-        _company = company.toUpperCase(); //make toUpperCase to avoid errors with capital letters
+        _company = company;
     }
 
     /**
@@ -24,7 +24,7 @@ public class ElectricityPlan {
     public String getSimulatedElectricityPrice(){
         double electricityPrice = 0.0;
 
-        switch(_company){
+        switch(_company.toUpperCase()){
             case "NUON":
                 electricityPrice = 0.212;
                 break;
@@ -43,9 +43,29 @@ public class ElectricityPlan {
             case "ESSENT":
                 electricityPrice = 0.210;
                 break;
+            case "NONE":
+            default: //REST default value
+                electricityPrice = 0.2; //Average electricity price in The Netherlands is 20 cents per kWh
+                break;
         }
 
         //Locale.GERMANY to get the Euro sign (NETHERLANDS isn't supported)
         return NumberFormat.getCurrencyInstance(Locale.GERMANY).format((electricityPrice * _consumedElektricity));
+    }
+
+    public double getConsumedElektricity() {
+        return _consumedElektricity;
+    }
+
+    public void setConsumedElektricity(double consumedElektricity) {
+        this._consumedElektricity = consumedElektricity;
+    }
+
+    public String getCompany() {
+        return _company;
+    }
+
+    public void setCompany(String company) {
+        this._company = company;
     }
 }

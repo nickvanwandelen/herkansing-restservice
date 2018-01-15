@@ -14,10 +14,14 @@ public class SimulatorController {
      * @return generated ElectricityPlan object based on the given JSON variables
      */
     @RequestMapping("/plan")
-    public ElectricityPlan electricityPlan(
+    public ElectricityPlan simulateElectricityPlan(
             @RequestParam(value = "consumedElectricity", defaultValue = "-1") double consumedElectricity,
             @RequestParam(value = "company", defaultValue = "none") String company
     ){
+        if(consumedElectricity < 0){
+            throw new IllegalArgumentException();
+        }
+
         return new ElectricityPlan(consumedElectricity, company);
     }
 }
